@@ -1,26 +1,52 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 import type { Farm } from "@/types/farm";
 
-export type Risk = "Low" | "Moderate" | "High";
-export type FarmView = Farm & { progress: number; risk: Risk };
-export interface Task { id: string; title: string; farm: string; priority: "High" | "Medium"; due: string; done: boolean }
+export interface Profile { name: string; email: string; phone: string; location: string }
+export interface Task { id: string; title: string; farmId: string; priority: "High" | "Medium" | "Low"; dueDate: string; done: boolean }
+export interface Observation { id: string; title: string; farmId: string; category: string; severity: "Low" | "Medium" | "High"; note: string; date: string }
 
-const farms: FarmView[] = [
-  { id: "1", name: "My Maize Farm", locationName: "Bamenda, Northwest", coordinates: { latitude: 5.9631, longitude: 10.1591 }, crop: "Maize", areaHectares: 2.4, plantingDate: "2026-06-12", progress: 78, risk: "Moderate" },
-  { id: "2", name: "Rice Field", locationName: "Mbouda, West", coordinates: { latitude: 5.6281, longitude: 10.2536 }, crop: "Rice", areaHectares: 1.6, plantingDate: "2026-05-20", progress: 54, risk: "Low" },
-  { id: "3", name: "Vegetable Garden", locationName: "Bafoussam, West", coordinates: { latitude: 5.4737, longitude: 10.4179 }, crop: "Tomato", areaHectares: 0.5, plantingDate: "2026-07-01", progress: 32, risk: "Low" },
-];
-const tasks: Task[] = [
-  { id: "t1", title: "Check soil moisture", farm: "My Maize Farm", priority: "High", due: "Today", done: false },
-  { id: "t2", title: "Inspect maize leaves", farm: "My Maize Farm", priority: "Medium", due: "Today", done: false },
-  { id: "t3", title: "Apply organic fertilizer", farm: "My Maize Farm", priority: "Medium", due: "Today", done: true },
-  { id: "t4", title: "Irrigation", farm: "My Farm", priority: "Medium", due: "Tomorrow", done: false },
-  { id: "t5", title: "Weeding", farm: "Rice Field", priority: "Medium", due: "Aug 12", done: false },
-];
+interface S {
+  accounts: Record<string, { profile: Profile; hash: string }>;
+  session: Profile | null;
+  farms: Farm[]; tasks: Task[]; observations: Observation[]; readIds: string[];
+  register: (p: Profile, hash: string) => string;
+  login: (email: string, hash: string) => boolean;
+  logout: () => void;
+  updateProfile: (p: Profile) => void;
+  addFarm: (f: Farm) => void; removeFarm: (id: string) => void;
+  addTask: (t: Task) => void; toggleTask: (id: string) => void; removeTask: (id: string) => void;
+  addObservation: (o: Observation) => void; removeObservation: (id: string) => void;
+  markRead: (ids: string[]) => void;
+}
 
-interface S { farms: FarmView[]; tasks: Task[]; toggleTask: (id: string) => void; addFarm: (f: Omit<FarmView, "id">) => void }
-export const useStore = create<S>((set) => ({
-  farms, tasks,
-  toggleTask: (id) => set((s) => ({ tasks: s.tasks.map((t) => (t.id === id ? { ...t, done: !t.done } : t)) })),
-  addFarm: (f) => set((s) => ({ farms: [...s.farms, { ...f, id: crypto.randomUUID() }] })),
-}));
+export const useStore = create<S>()(
+  persist(
+    (set, get) => ({
+      accounts: {}, session: null, farms: [], tasks: [], observations: [], readIds: [],
+      register: (p, hash) => {
+        const key = p.email.toLowerCase();
+        if (get().accounts[key]) return "An account with this email already exists.";
+        set((s) => ({ accounts: { ...s.accounts, [key]: { profile: p, hash } }, session: p }));
+        return "";
+      },
+      login: (email, hash) => {
+        const a = get().accounts[email.toLowerCase()];
+        if (!a || a.hash !== hash) return false;
+        set({ session: a.profile });
+        return true;
+      },
+      logout: () => set({ session: null }),
+      updateProfile: (p) => set((s) => ({ session: p, accounts: { ...s.accounts, [p.email.toLowerCase()]: { ...s.accounts[p.email.toLowerCase()], profile: p } } })),
+      addFarm: (f) => set((s) => ({ farms: [...s.farms, f] })),
+      removeFarm: (id) => set((s) => ({ farms: s.farms.filter((f) => f.id !== id), tasks: s.tasks.filter((t) => t.farmId !== id), observations: s.observations.filter((o) => o.farmId !== id) })),
+      addTask: (t) => set((s) => ({ tasks: [t, ...s.tasks] })),
+      toggleTask: (id) => set((s) => ({ tasks: s.tasks.map((t) => (t.id === id ? { ...t, done: !t.done } : t)) })),
+      removeTask: (id) => set((s) => ({ tasks: s.tasks.filter((t) => t.id !== id) })),
+      addObservation: (o) => set((s) => ({ observations: [o, ...s.observations] })),
+      removeObservation: (id) => set((s) => ({ observations: s.observations.filter((o) => o.id !== id) })),
+      markRead: (ids) => set((s) => ({ readIds: Array.from(new Set([...s.readIds, ...ids])) })),
+    }),
+    { name: "smartfarm" }
+  )
+);

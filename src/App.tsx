@@ -1,4 +1,6 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import type { ReactNode } from "react";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { useStore } from "@/store";
 import Layout from "@/components/Layout";
 import Landing from "@/pages/Landing";
 import { Login, Register } from "@/pages/Auth";
@@ -6,10 +8,17 @@ import Dashboard from "@/pages/Dashboard";
 import { Farms, FarmDetail } from "@/pages/Farms";
 import Weather from "@/pages/Weather";
 import Risk from "@/pages/Risk";
-import { Tasks, Observations, Notifications } from "@/pages/Lists";
+import Tasks from "@/pages/Tasks";
+import Observations from "@/pages/Observations";
+import Notifications from "@/pages/Notifications";
 import MapView from "@/pages/MapView";
 import Analytics from "@/pages/Analytics";
 import Settings from "@/pages/Settings";
+
+function RequireAuth({ children }: { children: ReactNode }) {
+  const session = useStore((s) => s.session);
+  return session ? <>{children}</> : <Navigate to="/login" replace />;
+}
 
 export default function App() {
   return (
@@ -18,7 +27,7 @@ export default function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/app" element={<Layout />}>
+        <Route path="/app" element={<RequireAuth><Layout /></RequireAuth>}>
           <Route index element={<Dashboard />} />
           <Route path="farms" element={<Farms />} />
           <Route path="farms/:id" element={<FarmDetail />} />
@@ -31,6 +40,7 @@ export default function App() {
           <Route path="notifications" element={<Notifications />} />
           <Route path="settings" element={<Settings />} />
         </Route>
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );
