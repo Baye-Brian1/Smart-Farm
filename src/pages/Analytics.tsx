@@ -9,7 +9,7 @@ import { Card, FarmSelect, Title } from "@/components/ui";
 import { CardsSkeleton, ErrorState, NoFarms } from "@/components/states";
 
 function Chart({ title, note, children }: { title: string; note?: string; children: ReactElement }) {
-  return <Card><h2 className="font-medium">{title}</h2>{note && <p className="mb-1 text-xs text-neutral-400">{note}</p>}<div className="h-56"><ResponsiveContainer>{children}</ResponsiveContainer></div></Card>;
+  return <Card className="min-w-0"><h2 className="font-medium">{title}</h2>{note && <p className="mb-1 text-xs text-neutral-400">{note}</p>}<div className="h-56 min-w-0"><ResponsiveContainer>{children}</ResponsiveContainer></div></Card>;
 }
 
 export default function Analytics() {
@@ -26,7 +26,7 @@ function View({ farms }: { farms: Farm[] }) {
   const grid = <CartesianGrid strokeDasharray="3 3" />;
   return (
     <div>
-      <Title action={<div className="flex items-center gap-2"><FarmSelect farms={farms} value={farm.id} onChange={setId} />
+      <Title action={<div className="flex w-full flex-wrap items-center gap-2 sm:w-auto"><FarmSelect farms={farms} value={farm.id} onChange={setId} />
         {[7, 30, 90].map((n) => <button key={n} onClick={() => setDays(n)} aria-pressed={days === n} className={`rounded-md border px-3 py-1 text-sm transition-colors ${days === n ? "border-green-800 bg-green-800 text-white" : "bg-white hover:bg-neutral-100"}`}>{n}D</button>)}</div>}>Analytics</Title>
       {loading && !data && <CardsSkeleton n={4} h="h-64" />}
       {error && <ErrorState message={error} onRetry={reload} />}

@@ -13,7 +13,7 @@ export const Card = ({ children, className = "" }: { children: ReactNode; classN
   <ShCard className={cn("gap-0 p-4", className)}>{children}</ShCard>
 );
 export const Title = ({ children, action }: { children: ReactNode; action?: ReactNode }) => (
-  <div className="mb-4 flex flex-wrap items-center justify-between gap-2"><h1 className="text-xl font-semibold">{children}</h1>{action}</div>
+  <div className="mb-4 flex flex-col items-start justify-between gap-2 sm:flex-row sm:items-center"><h1 className="text-xl font-semibold">{children}</h1>{action && <div className="w-full sm:w-auto">{action}</div>}</div>
 );
 export const Btn = ({ children, onClick, type = "button", className = "", loading, disabled, variant = "default" }: { children: ReactNode; onClick?: () => void; type?: "button" | "submit"; className?: string; loading?: boolean; disabled?: boolean; variant?: "default" | "outline" }) => (
   <Button type={type} variant={variant} onClick={onClick} disabled={disabled || loading}
@@ -39,7 +39,7 @@ export const Select = ({ label, error, children, ...p }: { label?: string; error
     {error && <span className="mt-1 block text-xs text-red-600">{error}</span>}</label>
 );
 export const FarmSelect = ({ farms, value, onChange }: { farms: Farm[]; value: string; onChange: (id: string) => void }) => (
-  <div className="w-52"><Select value={value} onChange={(e) => onChange(e.target.value)}>{farms.map((f) => <option key={f.id} value={f.id}>{f.name}</option>)}</Select></div>
+  <div className="w-full sm:w-52"><Select value={value} onChange={(e) => onChange(e.target.value)}>{farms.map((f) => <option key={f.id} value={f.id}>{f.name}</option>)}</Select></div>
 );
 export const icon = (c: string) => /clear/i.test(c) ? "☀️" : /partly/i.test(c) ? "⛅" : /rain|drizzle|shower/i.test(c) ? "🌧️" : /thunder/i.test(c) ? "⛈️" : /fog/i.test(c) ? "🌫️" : "☁️";
 export const day = (d: string) => new Date(d).toLocaleDateString("en", { weekday: "short" });

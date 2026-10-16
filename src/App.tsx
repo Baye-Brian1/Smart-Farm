@@ -2,7 +2,8 @@ import type { ReactNode } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { useStore } from "@/store";
 import Layout from "@/components/Layout";
-import Landing from "@/pages/Landing";
+import PublicLayout from "@/components/public/PublicLayout";
+import Home from "@/pages/public/Home";
 import { Login, Register } from "@/pages/Auth";
 import Dashboard from "@/pages/Dashboard";
 import { Farms, FarmDetail } from "@/pages/Farms";
@@ -24,7 +25,9 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Landing />} />
+        <Route path="/" element={<PublicLayout />}>
+          <Route index element={<Home />} />
+        </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/app" element={<RequireAuth><Layout /></RequireAuth>}>

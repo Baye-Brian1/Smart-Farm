@@ -37,9 +37,9 @@ export default function Observations() {
       {observations.length === 0 && <EmptyState title="No observations yet" hint="Record pests, disease or growth notes as you walk your fields." />}
       {observations.length > 0 && list.length === 0 && <p className="text-sm text-neutral-500">No {filter.toLowerCase()} observations.</p>}
       {list.map((o) => (
-        <Card key={o.id} className="mb-2 flex items-center justify-between gap-3">
-          <div><b className="text-sm">{o.title}</b><div className="text-xs text-neutral-500">{farms.find((f) => f.id === o.farmId)?.name ?? "General"} · {o.category} · {o.date}</div>{o.note && <p className="mt-1 text-xs text-neutral-600">{o.note}</p>}</div>
-          <div className="flex items-center gap-2"><span className={`rounded px-2 py-0.5 text-xs ${sevTone[o.severity]}`}>{o.severity}</span>
+        <Card key={o.id} className="mb-2 flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
+          <div className="min-w-0"><b className="break-words text-sm">{o.title}</b><div className="break-words text-xs text-neutral-500">{farms.find((f) => f.id === o.farmId)?.name ?? "General"} · {o.category} · {o.date}</div>{o.note && <p className="mt-1 break-words text-xs text-neutral-600">{o.note}</p>}</div>
+          <div className="flex shrink-0 items-center gap-2 self-end sm:self-auto"><span className={`rounded px-2 py-0.5 text-xs ${sevTone[o.severity]}`}>{o.severity}</span>
             <button onClick={() => removeObservation(o.id)} aria-label="Delete observation" className="rounded p-1 text-neutral-400 hover:bg-red-50 hover:text-red-600"><Trash2 size={16} /></button></div>
         </Card>
       ))}

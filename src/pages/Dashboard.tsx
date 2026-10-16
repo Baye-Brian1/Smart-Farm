@@ -58,7 +58,7 @@ function Overview() {
         </div>
         <div className="space-y-4">
           <Card><h2 className="mb-2 font-medium">Weather Forecast{ok[0] && <span className="text-xs font-normal text-neutral-500"> · {ok[0].farm.locationName}</span>}</h2>
-            <div className="flex justify-between text-center text-xs">{lead?.daily.slice(0, 6).map((d) => <div key={d.date}>{day(d.date)}<div className="text-lg">{icon(d.condition)}</div>{Math.round(d.tempMax)}°</div>)}</div>
+            <div className="grid grid-cols-3 gap-2 text-center text-xs sm:flex sm:justify-between">{lead?.daily.slice(0, 6).map((d) => <div key={d.date}>{day(d.date)}<div className="text-lg">{icon(d.condition)}</div>{Math.round(d.tempMax)}°</div>)}</div>
             {!lead && <p className="text-sm text-neutral-500">Forecast unavailable.</p>}</Card>
           <Card><h2 className="mb-1 font-medium">Today's Recommendation</h2>
             <p className="text-sm text-neutral-600">{lead ? recommend(lead) : "Recommendations appear once weather data loads."}</p></Card>

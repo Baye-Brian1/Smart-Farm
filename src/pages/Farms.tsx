@@ -83,9 +83,9 @@ export function Farms() {
       {farms.length > 0 && list.length === 0 && <p className="text-sm text-neutral-500">No farms match "{q}".</p>}
       <div className="space-y-3">
         {list.map((f) => { const p = cropProgress(f); return (
-          <Link key={f.id} to={`/app/farms/${f.id}`} className="block"><Card className="flex items-center gap-4 transition-shadow hover:shadow-md">
-            <div className="flex-1"><b>{f.name}</b><p className="text-xs text-neutral-500">{f.locationName} · {f.crop} · {f.areaHectares} ha · Planted {f.plantingDate}</p></div>
-            <div className="w-40"><div className="mb-1 text-sm">{p.pct}% · {p.stage}</div><Bar v={p.pct} /></div>
+          <Link key={f.id} to={`/app/farms/${f.id}`} className="block"><Card className="flex flex-col gap-3 transition-shadow hover:shadow-md sm:flex-row sm:items-center sm:gap-4">
+            <div className="min-w-0 flex-1"><b>{f.name}</b><p className="break-words text-xs text-neutral-500">{f.locationName} · {f.crop} · {f.areaHectares} ha · Planted {f.plantingDate}</p></div>
+            <div className="w-full sm:w-40"><div className="mb-1 text-sm">{p.pct}% · {p.stage}</div><Bar v={p.pct} /></div>
           </Card></Link>); })}
       </div>
     </div>
@@ -105,7 +105,7 @@ export function FarmDetail() {
     <div>
       <Title action={<Btn variant="outline" onClick={() => { if (confirm(`Delete ${farm.name}? Its tasks and observations are removed too.`)) { remove(farm.id); nav("/app/farms"); } }}><Trash2 /> Delete</Btn>}>{farm.name}</Title>
       <div className="grid gap-4 md:grid-cols-3">
-        <Card><h2 className="mb-2 font-medium">Farm Information</h2>{rows.map(([k, v]) => <div key={k} className="flex justify-between py-1 text-sm"><span className="text-neutral-500">{k}</span>{v}</div>)}</Card>
+        <Card><h2 className="mb-2 font-medium">Farm Information</h2>{rows.map(([k, v]) => <div key={k} className="flex flex-wrap justify-between gap-x-3 py-1 text-sm"><span className="text-neutral-500">{k}</span><span className="break-words text-right">{v}</span></div>)}</Card>
         <Card><h2 className="mb-2 font-medium">Crop Progress</h2><div className="mb-2 text-3xl font-semibold text-green-800">{p.pct}%</div><Bar v={p.pct} /></Card>
         <Card><h2 className="mb-2 font-medium">Quick Stats</h2>
           {loading && !data && <CardsSkeleton n={1} h="h-20" />}

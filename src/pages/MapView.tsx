@@ -18,7 +18,7 @@ export default function MapView() {
     <div>
       <Title>Map View</Title>
       {error && <div className="mb-3"><ErrorState message={error} onRetry={reload} /></div>}
-      <Card className="relative h-[28rem] overflow-hidden bg-gradient-to-br from-green-100 to-lime-200 p-0">
+      <Card className="relative h-80 overflow-hidden bg-gradient-to-br from-green-100 to-lime-200 p-0 sm:h-[28rem]">
         {loading && !data && <Skeleton className="absolute inset-0 rounded-none opacity-40" />}
         {farms.map((f) => {
           const rep = data?.find((r) => r.farm.id === f.id)?.report;
@@ -26,7 +26,7 @@ export default function MapView() {
           return (
             <Link key={f.id} to={`/app/farms/${f.id}`} className="absolute -translate-x-1/2 -translate-y-1/2" style={{ left: `${pos(f.coordinates.longitude, minLn, maxLn)}%`, top: `${pos(maxLa - f.coordinates.latitude + minLa, minLa, maxLa)}%` }}>
               <div className={`mx-auto h-4 w-4 rounded-full border-2 border-white ${lvl ? color[lvl] : "bg-neutral-400"}`} />
-              <div className="mt-1 whitespace-nowrap rounded bg-white px-2 py-0.5 text-xs shadow">{f.name}{lvl && ` · ${lvl}`}</div>
+              <div className="mt-1 max-w-[min(10rem,60vw)] truncate rounded bg-white px-2 py-0.5 text-xs shadow sm:max-w-none sm:whitespace-nowrap">{f.name}{lvl && ` · ${lvl}`}</div>
             </Link>
           );
         })}

@@ -39,9 +39,9 @@ export default function Tasks() {
       {groups.filter(([, l]) => l.length).map(([g, list]) => (
         <div key={g} className="mb-4"><h2 className={`mb-2 text-sm font-medium ${g === "Overdue" ? "text-red-600" : "text-neutral-500"}`}>{g} ({list.length})</h2>
           {list.map((t) => (
-            <Card key={t.id} className="mb-2 flex items-center gap-3">
+            <Card key={t.id} className="mb-2 flex flex-wrap items-center gap-3">
               <input type="checkbox" checked={t.done} onChange={() => toggleTask(t.id)} className="h-4 w-4 accent-green-800" aria-label={`Mark ${t.title} done`} />
-              <div className="flex-1"><div className={t.done ? "text-neutral-400 line-through" : ""}>{t.title}</div><div className="text-xs text-neutral-500">{farmName(t.farmId)} · {t.dueDate}</div></div>
+              <div className="min-w-0 flex-1"><div className={`break-words ${t.done ? "text-neutral-400 line-through" : ""}`}>{t.title}</div><div className="break-words text-xs text-neutral-500">{farmName(t.farmId)} · {t.dueDate}</div></div>
               <span className={`rounded px-2 py-0.5 text-xs ${t.priority === "High" ? "bg-red-100 text-red-800" : "bg-neutral-100"}`}>{t.priority}</span>
               <button onClick={() => removeTask(t.id)} aria-label="Delete task" className="rounded p-1 text-neutral-400 hover:bg-red-50 hover:text-red-600"><Trash2 size={16} /></button>
             </Card>
