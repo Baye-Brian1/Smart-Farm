@@ -3,15 +3,22 @@ import { Link } from "react-router-dom";
 import { motion } from "motion/react";
 import {
   ArrowRight,
-  BellRing,
-  ChartLine,
+  Bell,
   CloudSun,
   Droplets,
+  Leaf,
   MapPin,
-  ShieldCheck,
   Sprout,
   Thermometer,
+  CloudRain,
+  TrendingUp,
+  CheckCircle2,
+  ArrowUpRight,
+  ChartLine,
+  ShieldCheck,
+  BellRing,
 } from "lucide-react";
+import hero from "@/images/A4.jfif";
 
 const Reveal = ({
   children,
@@ -75,93 +82,263 @@ const steps = [
 export default function Home() {
   return (
     <div>
-      <section className="relative overflow-hidden bg-gradient-to-b from-green-50 to-stone-50">
-        <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-14 sm:px-5 sm:py-20 md:grid-cols-2 md:gap-12 md:py-28">
+      <section className="relative isolate min-h-[720px] overflow-hidden bg-green-950 sm:min-h-[760px]">
+        <img
+          src={hero}
+          alt="Healthy green maize field in the countryside"
+          className="absolute inset-0 -z-20 h-full w-full object-fill object-center"
+        />
+
+        {/* Dark gradient for readable text */}
+        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-green-950/95 via-green-950/80 to-green-950/25" />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-t from-green-950/50 via-transparent to-green-950/10" />
+
+        <div className="mx-auto grid min-h-[720px] max-w-7xl items-center gap-12 px-4 py-16 sm:px-5 sm:py-20 md:min-h-[760px] md:grid-cols-2 md:gap-10 ">
+          {/* Left content */}
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.65, ease: "easeOut" }}
+            className="max-w-2xl"
           >
-            <span className="inline-block rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-900">
+            {/* Eyebrow */}
+            <div className="inline-flex items-center gap-2 rounded-full border border-lime-300/20 bg-green-800/60 px-3 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-lime-200 shadow-sm backdrop-blur-md sm:text-sm">
+              <Leaf size={16} />
               Climate-aware farming
-            </span>
-            <h1 className="mt-4 text-4xl font-bold leading-tight tracking-tight sm:text-5xl md:text-6xl">
-              Farm with the weather,{" "}
-              <span className="text-green-800">not against it.</span>
+            </div>
+
+            {/* Main heading */}
+            <h1 className="mt-7 text-4xl font-bold leading-[1.1] tracking-tight text-white sm:text-5xl md:text-[3.5rem] lg:text-6xl xl:text-[4.25rem]">
+              Make <span className="text-lime-300">better farming</span>{" "}
+              decisions.
             </h1>
-            <p className="mt-5 max-w-lg text-base text-stone-600 sm:text-lg">
-              ClimateSmart Farm turns live forecasts, soil conditions and your
-              crop calendar into clear risk alerts and daily advice.
+
+            {/* Description */}
+            <p className="mt-6 max-w-xl text-base leading-7 text-green-50/90 sm:text-lg sm:leading-8">
+              Weather insights, crop tracking and timely recommendations —
+              tailored to your farm in Cameroon.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
+
+            {/* Call-to-action buttons */}
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <Link
                 to="/register"
-                className="inline-flex items-center gap-2 rounded-full bg-green-800 px-6 py-3 font-medium text-white transition-colors hover:bg-green-900"
+                className="group inline-flex min-h-14 items-center justify-center gap-3 rounded-xl bg-green-600 px-6 py-4 font-semibold text-white shadow-lg shadow-green-950/20 transition-all duration-200 hover:-translate-y-0.5 hover:bg-green-500 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lime-300 focus-visible:ring-offset-2 focus-visible:ring-offset-green-950"
               >
-                Get started free <ArrowRight size={16} />
+                Create your farm
+                <ArrowRight
+                  size={19}
+                  className="transition-transform group-hover:translate-x-1"
+                />
               </Link>
+
               <Link
                 to="/features"
-                className="rounded-full border border-green-800 px-6 py-3 font-medium text-green-900 transition-colors hover:bg-green-50"
+                className="inline-flex min-h-14 items-center justify-center gap-2 rounded-xl border border-white/45 bg-white/5 px-6 py-4 font-semibold text-white backdrop-blur-sm transition-all duration-200 hover:border-white hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lime-300"
               >
-                See features
+                Explore features
               </Link>
             </div>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.15 }}
-            className="relative"
-          >
-            <div className="rounded-3xl border bg-white p-5 shadow-xl">
-              <div className="flex items-center justify-between">
-                <div>
-                  <div className="text-xs text-stone-500">Sample farm</div>
-                  <b>Maize Field</b>
+
+            {/* Value propositions */}
+            <div className="mt-10 grid max-w-xl grid-cols-1 gap-5 border-t border-white/20 pt-7 sm:grid-cols-3 sm:gap-4">
+              <div className="flex items-center gap-3">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-white/15 bg-white/10 text-lime-300">
+                  <CloudSun size={23} strokeWidth={1.7} />
                 </div>
-                <span className="rounded-full bg-amber-100 px-2 py-0.5 text-xs text-amber-800">
-                  Moderate risk
+                <p className="text-sm leading-5 text-white/90">
+                  Local weather
+                  <span className="block text-white/60">Insights</span>
+                </p>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-white/15 bg-white/10 text-lime-300">
+                  <Sprout size={23} strokeWidth={1.7} />
+                </div>
+                <p className="text-sm leading-5 text-white/90">
+                  Crop-stage
+                  <span className="block text-white/60">Guidance</span>
+                </p>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-white/15 bg-white/10 text-lime-300">
+                  <Bell size={22} strokeWidth={1.7} />
+                </div>
+                <p className="text-sm leading-5 text-white/90">
+                  Practical daily
+                  <span className="block text-white/60">Advice</span>
+                </p>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Right: sample farm dashboard */}
+          <motion.div
+            initial={{ opacity: 0, x: 28 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.75, delay: 0.15, ease: "easeOut" }}
+            className="relative mx-auto w-full max-w-[560px] md:ml-auto"
+          >
+            {/* Decorative glow */}
+            <div className="absolute -inset-5 -z-10 rounded-[2rem] bg-lime-300/10 blur-3xl" />
+
+            <div className="rounded-2xl border border-white/70 bg-white p-5 shadow-2xl shadow-green-950/30 sm:rounded-3xl sm:p-7">
+              {/* Farm header */}
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex items-start gap-3">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-green-50 text-green-700">
+                    <Sprout size={25} />
+                  </div>
+
+                  <div>
+                    <h2 className="text-lg font-bold tracking-tight text-slate-900 sm:text-xl">
+                      My Maize Farm
+                    </h2>
+                    <p className="mt-1 flex items-center gap-1.5 text-sm text-slate-500">
+                      <MapPin size={14} />
+                      Bamenda, Northwest Region
+                    </p>
+                  </div>
+                </div>
+
+                <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-amber-50 px-3 py-1.5 text-xs font-semibold text-amber-700">
+                  <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />
+                  Weather watch
                 </span>
               </div>
-              <div className="my-4 flex items-end gap-3">
-                <span className="text-5xl">⛅</span>
-                <span className="text-5xl font-semibold">24°C</span>
+
+              {/* Current weather */}
+              <div className="mt-7 flex items-center gap-4">
+                <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-amber-50 text-amber-500">
+                  <CloudSun size={43} strokeWidth={1.5} />
+                </div>
+
+                <div>
+                  <p className="text-4xl font-bold tracking-tight text-slate-900">
+                    24°C
+                  </p>
+                  <p className="mt-1 text-sm text-slate-500">Partly cloudy</p>
+                </div>
               </div>
-              <div className="grid grid-cols-3 gap-2 text-center text-xs">
-                {[
-                  [Droplets, "Humidity", "78%"],
-                  [Thermometer, "Soil", "21%"],
-                  [CloudSun, "Rain", "12 mm"],
-                ].map(([Icon, l, v]) => {
-                  const I = Icon as typeof Droplets;
-                  return (
-                    <div
-                      key={l as string}
-                      className="rounded-xl bg-green-50 p-2"
-                    >
-                      <I className="mx-auto mb-1 text-green-800" size={16} />
-                      {l as string}
-                      <b className="block text-sm">{v as string}</b>
+
+              {/* Weather metrics */}
+              <div className="mt-6 grid grid-cols-3 divide-x divide-green-100 rounded-2xl bg-green-50/80 py-4">
+                <div className="px-2 text-center sm:px-3">
+                  <Droplets size={20} className="mx-auto text-green-700" />
+                  <p className="mt-2 text-xs text-slate-500 sm:text-sm">
+                    Humidity
+                  </p>
+                  <p className="mt-1 font-bold text-slate-900">78%</p>
+                </div>
+
+                <div className="px-2 text-center sm:px-3">
+                  <CloudRain size={20} className="mx-auto text-green-700" />
+                  <p className="mt-2 text-xs text-slate-500 sm:text-sm">
+                    Rainfall
+                  </p>
+                  <p className="mt-1 font-bold text-slate-900">12 mm</p>
+                </div>
+
+                <div className="px-2 text-center sm:px-3">
+                  <Sprout size={20} className="mx-auto text-green-700" />
+                  <p className="mt-2 text-xs text-slate-500 sm:text-sm">
+                    Crop stage
+                  </p>
+                  <p className="mt-1 font-bold text-slate-900">Flowering</p>
+                </div>
+              </div>
+
+              {/* Crop progress */}
+              <div className="mt-6">
+                <div className="flex items-center justify-between gap-3">
+                  <div>
+                    <p className="text-sm font-semibold text-slate-800">
+                      Crop progress
+                    </p>
+                    <p className="mt-1 text-xs text-slate-500">
+                      Estimated growth progress
+                    </p>
+                  </div>
+
+                  <span className="text-sm font-bold text-green-700">62%</span>
+                </div>
+
+                <div
+                  className="mt-3 h-2.5 overflow-hidden rounded-full bg-slate-100"
+                  role="progressbar"
+                  aria-label="Estimated crop progress"
+                  aria-valuenow={62}
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                >
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: "62%" }}
+                    transition={{ duration: 1, delay: 0.5 }}
+                    className="h-full rounded-full bg-green-600"
+                  />
+                </div>
+              </div>
+
+              {/* Recommendation */}
+              <div className="mt-6 rounded-2xl border border-green-100 bg-gradient-to-br from-green-50 to-emerald-50 p-4 sm:p-5">
+                <div className="flex items-start gap-3">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-green-700 text-white">
+                    <Leaf size={20} />
+                  </div>
+
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 size={16} className="text-green-700" />
+                      <p className="text-sm font-bold text-green-900">
+                        Today&apos;s recommendation
+                      </p>
                     </div>
-                  );
-                })}
+
+                    <p className="mt-2 text-sm leading-6 text-slate-600">
+                      Rain may be approaching. Check field drainage and avoid
+                      unnecessary irrigation when rainfall is sufficient.
+                    </p>
+                  </div>
+
+                  <ArrowUpRight
+                    size={20}
+                    className="mt-1 shrink-0 text-green-700"
+                  />
+                </div>
               </div>
-              <div className="mt-4 text-xs text-stone-500">
-                Crop progress · Flowering
-              </div>
-              <div className="mt-1 h-2 rounded bg-stone-200">
-                <div className="h-2 w-3/4 rounded bg-green-700" />
-              </div>
+
+              {/* Sample data disclosure */}
+              <p className="mt-4 text-center text-xs leading-5 text-slate-400">
+                Illustrative preview · Live data appears after farm setup
+              </p>
             </div>
-            <div className="absolute -bottom-4 -left-4 hidden rounded-2xl border bg-white px-4 py-3 text-sm shadow-lg md:block">
-              <BellRing className="mr-2 inline text-amber-600" size={16} />
-              Heavy rain expected tomorrow
-            </div>
+
+            {/* Floating notification */}
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.9 }}
+              className="absolute -bottom-5 left-4 hidden items-center gap-3 rounded-xl border border-slate-100 bg-white px-4 py-3 shadow-xl sm:flex sm:left-8"
+            >
+              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-amber-50 text-amber-600">
+                <Bell size={18} />
+              </div>
+
+              <div>
+                <p className="text-sm font-semibold text-slate-800">
+                  Weather awareness
+                </p>
+                <p className="mt-0.5 text-xs text-slate-500">
+                  Stay informed about changing conditions
+                </p>
+              </div>
+            </motion.div>
           </motion.div>
         </div>
       </section>
-
       <section
         id="features"
         className="mx-auto max-w-6xl scroll-mt-20 px-4 py-14 sm:px-5 sm:py-20"
