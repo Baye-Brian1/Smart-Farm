@@ -93,7 +93,7 @@ export default function Home() {
         <div className="absolute inset-0 -z-10 bg-gradient-to-r from-green-950/95 via-green-950/80 to-green-950/25" />
         <div className="absolute inset-0 -z-10 bg-gradient-to-t from-green-950/50 via-transparent to-green-950/10" />
 
-        <div className="mx-auto grid min-h-[720px] max-w-7xl items-center gap-12 px-4 py-16 sm:px-5 sm:py-20 md:min-h-[760px] md:grid-cols-2 md:gap-10 ">
+        <div className="mx-auto grid min-h-[720px] max-w-7xl items-center gap-12 px-4 py-10 sm:px-5 sm:py-20 md:min-h-[760px] md:grid-cols-2 md:gap-10">
           {/* Left content */}
           <motion.div
             initial={{ opacity: 0, y: 22 }}
@@ -108,13 +108,13 @@ export default function Home() {
             </div>
 
             {/* Main heading */}
-            <h1 className="mt-7 text-4xl font-bold leading-[1.1] tracking-tight text-white sm:text-5xl md:text-[3.5rem] lg:text-6xl xl:text-[4.25rem]">
-              Make <span className="text-lime-300">better farming</span>{" "}
-              decisions.
+            <h1 className="mt-5 text-4xl font-bold leading-[1.1] tracking-tight text-white sm:text-5xl md:text-[68px]">
+              Make better<br />{" "}
+              <span className="text-lime-300">farming decisions</span>{" "}
             </h1>
 
             {/* Description */}
-            <p className="mt-6 max-w-xl text-base leading-7 text-green-50/90 sm:text-lg sm:leading-8">
+            <p className="mt-5 max-w-xl text-base leading-7 text-green-50/90 sm:text-lg sm:leading-8">
               Weather insights, crop tracking and timely recommendations —
               tailored to your farm in Cameroon.
             </p>
@@ -123,7 +123,10 @@ export default function Home() {
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <Link
                 to="/register"
-                className="group inline-flex min-h-14 items-center justify-center gap-3 rounded-xl bg-green-600 px-6 py-4 font-semibold text-white shadow-lg shadow-green-950/20 transition-all duration-200 hover:-translate-y-0.5 hover:bg-green-500 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lime-300 focus-visible:ring-offset-2 focus-visible:ring-offset-green-950"
+                className="group inline-flex min-h-14 items-center justify-center gap-3 rounded-[9px]
+                 bg-green-600 px-6 py-3 font-semibold text-white shadow-lg shadow-green-950/20
+                  transition-all duration-200 hover:-translate-y-0.5 hover:bg-green-500 
+                  hover:shadow-xl"
               >
                 Create your farm
                 <ArrowRight
@@ -134,7 +137,9 @@ export default function Home() {
 
               <Link
                 to="/features"
-                className="inline-flex min-h-14 items-center justify-center gap-2 rounded-xl border border-white/45 bg-white/5 px-6 py-4 font-semibold text-white backdrop-blur-sm transition-all duration-200 hover:border-white hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lime-300"
+                className="inline-flex min-h-14 items-center justify-center gap-2 rounded-[9px] border
+                 border-white/45 bg-white/5 px-6 py-3 font-semibold text-white backdrop-blur-sm 
+                 transition-all duration-200 hover:border-white hover:bg-white/10 "
               >
                 Explore features
               </Link>
@@ -174,7 +179,7 @@ export default function Home() {
             </div>
           </motion.div>
 
-          {/* Right: sample farm dashboard */}
+
           <motion.div
             initial={{ opacity: 0, x: 28 }}
             animate={{ opacity: 1, x: 0 }}
@@ -194,11 +199,11 @@ export default function Home() {
 
                   <div>
                     <h2 className="text-lg font-bold tracking-tight text-slate-900 sm:text-xl">
-                      My Maize Farm
+                      My Farm
                     </h2>
                     <p className="mt-1 flex items-center gap-1.5 text-sm text-slate-500">
                       <MapPin size={14} />
-                      Bamenda, Northwest Region
+                      Location
                     </p>
                   </div>
                 </div>
