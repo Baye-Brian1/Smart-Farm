@@ -1,5 +1,5 @@
-import type { ReactNode} from "react";
-import React from "react"
+import type { ReactNode } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "motion/react";
 import {
@@ -18,7 +18,6 @@ import {
   BellRing,
 } from "lucide-react";
 import hero from "@/images/A4.jfif";
-
 
 const Reveal = ({
   children,
@@ -71,13 +70,26 @@ const features = [
 ] as const;
 
 const steps = [
-  ["Add your farm", "Search your town, pick your crop and planting date."],
-  [
-    "We read the weather",
-    "Live forecasts and soil data load for your exact location.",
-  ],
-  ["Act with confidence", "Get clear risk levels and a daily recommendation."],
-  ["Act with confidence", "Get clear risk levels and a daily recommendation."],
+  {
+    title: "Add your farm",
+    desc: "Search your town, pick your crop, and input your planting date.",
+    bg: "bg-blue-50 text-blue-600",
+  },
+  {
+    title: "Analyze the weather",
+    desc: "Live forecasts and historical climate metrics load for your exact coordination.",
+    bg: "bg-teal-50 text-teal-600",
+  },
+  {
+    title: "Monitor soil data",
+    desc: "Track real-time moisture conditions and evaporation levels across your plots.",
+    bg: "bg-amber-50 text-amber-600",
+  },
+  {
+    title: "Act with confidence",
+    desc: "Receive calculated risk alerts and highly tailored daily field recommendations.",
+    bg: "bg-emerald-50 text-emerald-600",
+  },
 ] as const;
 
 export default function Home() {
@@ -379,10 +391,10 @@ export default function Home() {
               How it works
             </h2>
           </Reveal>
-          
-            <div className="relative mt-10 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
-              <div className="absolute left-1/2 top-4 bottom-4 w-[2px] bg-green-400 -translate-x-1/2 hidden md:block"></div>
-              {steps.map((step, i) => {
+
+          <div className="relative mt-10 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+            <div className="absolute left-1/2 top-4 bottom-4 w-[2px] bg-green-400 -translate-x-1/2 hidden md:block"></div>
+            {steps.map((step, i) => {
               const isEven = i % 2 === 1;
               return (
                 <React.Fragment>
@@ -392,17 +404,22 @@ export default function Home() {
                   >
                     <Reveal delay={i * 0.1}>
                       <div className="min-h-140px rounded-2xl border border-gray-100 bg-white p-6 shadow-sm flex gap-4 transition-shadow hover:shadow-md">
-                        <span className="grid h-10 w-10 place-items-center rounded-full text-white bg-green-600 justify-center items-center">
-                          {i+1}
+                        <span className="flex p-4 h-10 w-10 rounded-full text-md text-white bg-green-600 justify-center items-center">
+                          {i + 1}
                         </span>
-                        <p className="mt-1 text-sm text-stone-500">{step}</p>
+                        <div>
+                          <p className="mt-1 font-semibold text-gray-900">{step.title}</p>
+                          <p className="mt-1 text-sm text-stone-500">
+                            {step.desc}
+                          </p>
+                        </div>
                       </div>
                     </Reveal>
                   </div>
                 </React.Fragment>
               );
             })}
-            </div>
+          </div>
         </div>
       </section>
 
