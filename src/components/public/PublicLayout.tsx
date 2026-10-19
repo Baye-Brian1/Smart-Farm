@@ -3,9 +3,9 @@ import { Link, Outlet } from "react-router-dom";
 import { Leaf, Menu, X } from "lucide-react";
 
 const links = ["/", "/#features", "/#how-it-works", "/#about"] as const;
-const labels = ["Home", "Features", "How it works", "About"] as const;
+const labels = ["Home", "About", "Features", "How it works",] as const;
 const pill =
-  "rounded-full px-3 py-2 text-[18px] transition-colors hover:bg-green-50 hover:text-green-900";
+  "rounded-full px-3 py-2 text-lg transition-colors hover:bg-green-50 hover:text-green-900";
 
 export default function PublicLayout() {
   const [open, setOpen] = useState(false);
@@ -23,10 +23,10 @@ export default function PublicLayout() {
   return (
     <div className="flex min-h-screen flex-col bg-stone-50 text-stone-900">
       <header className="sticky top-0 z-20 border-b bg-white/80 backdrop-blur">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-3 px-4 sm:px-5">
+        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-3 px-4 sm:px-5">
           <Link
             to="/"
-            className="flex items-center gap-2 text-[20px] font-bold text-green-900"
+            className="flex items-center gap-2 text-2xl font-bold text-green-900"
             onClick={() => setOpen(false)}
           >
             <span className="grid h-8 w-8 place-items-center rounded-lg bg-green-800 text-white">
@@ -39,7 +39,7 @@ export default function PublicLayout() {
           </nav>    
             <Link
               to="/register"
-              className="rounded-[8px] bg-green-800 px-[18px] py-[10px] text-sm font-medium text-white transition-colors hover:bg-green-900"
+              className="rounded-[8px] bg-green-800 px-[18px] py-[10px] text-[17px] font-medium text-white transition-colors hover:bg-green-900"
             >
               Get started
             </Link>

@@ -77,6 +77,7 @@ const steps = [
     "Live forecasts and soil data load for your exact location.",
   ],
   ["Act with confidence", "Get clear risk levels and a daily recommendation."],
+   ["Act with confidence", "Get clear risk levels and a daily recommendation."],
 ] as const;
 
 export default function Home() {
@@ -217,7 +218,7 @@ export default function Home() {
               {/* Current weather */}
               <div className="mt-7 flex items-center gap-4">
                 <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-amber-50 text-amber-500">
-                  <CloudSun size={43} strokeWidth={1.5} />
+                  <CloudSun size={43} strokeWidth={1.3} />
                 </div>
 
                 <div>
@@ -349,17 +350,17 @@ export default function Home() {
         className="mx-auto max-w-6xl scroll-mt-20 px-4 py-14 sm:px-5 sm:py-20"
       >
         <Reveal>
-          <h2 className="text-center text-2xl font-bold tracking-tight sm:text-3xl">
-            Everything you need to decide with confidence
+          <h2 className="text-center text-2xl font-bold tracking-tight sm:text-[44px]">
+            Everything you need to decide <br /> with confidence
           </h2>
-          <p className="mx-auto mt-3 max-w-xl text-center text-stone-600">
+          <p className="mx-auto mt-3 max-w-xl text-center text-xl text-stone-600">
             One dashboard for weather, risk, tasks and trends.
           </p>
         </Reveal>
         <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {features.map(([Icon, t, d], i) => (
             <Reveal key={t} delay={i * 0.06}>
-              <div className="h-full rounded-2xl border bg-white p-6 transition-shadow hover:shadow-md">
+              <div className="h-full rounded-2xl border bg-white p-7 transition-shadow hover:shadow-md">
                 <span className="grid h-10 w-10 place-items-center rounded-xl bg-green-100 text-green-800">
                   <Icon size={20} />
                 </span>
@@ -373,7 +374,7 @@ export default function Home() {
 
       <section
         id="how-it-works"
-        className="scroll-mt-20 bg-green-900 text-white"
+        className="scroll-mt-20 bg-white text-black"
       >
         <div className="mx-auto max-w-6xl px-4 py-14 sm:px-5 sm:py-20">
           <Reveal>
@@ -382,6 +383,12 @@ export default function Home() {
             </h2>
           </Reveal>
           <div className="mt-10 grid gap-8 md:grid-cols-3">
+            <div className="relative grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+              <div className="absolute left-1/2 top-4 bottom-4 w-[2px] bg-green-400 -translate-x-1/2 hidden md:block">
+              
+              </div>
+
+            </div>
             {steps.map(([t, d], i) => (
               <Reveal key={t} delay={i * 0.1}>
                 <div>
@@ -389,7 +396,7 @@ export default function Home() {
                     {i + 1}
                   </span>
                   <h3 className="mt-4 text-lg font-semibold">{t}</h3>
-                  <p className="mt-1 text-green-100">{d}</p>
+                  <p className="mt-1 text-stone-600">{d}</p>
                 </div>
               </Reveal>
             ))}
