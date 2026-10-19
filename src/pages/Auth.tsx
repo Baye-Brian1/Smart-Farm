@@ -40,13 +40,16 @@ function Shell({
   if (session) return <Navigate to="/app" replace />;
   return (
     <div className="flex min-h-screen items-center justify-center bg-neutral-50 p-4">
-      <Card className="w-full max-w-sm p-6">
-        <div className="mb-4 flex items-center justify-center gap-1 font-bold text-green-800">
-          <Leaf size={18} />
-          ClimateSmart Farm
+      <Card className="w-full max-w-md border border-white bg-white shadow-md p-10">
+        <div className="mb-4 text-2xl flex flex-col items-start  ">
+          <div className="flex items-center gap-2">
+            <Leaf size={24} className="text-green-800" />
+            <p className="font-bold text-shadow-green-800">ClimateSmart </p>
+          </div>
+          <span className="ml-8 text-[18px] font-semibold text-green-800">Farm</span>
         </div>
-        <h1 className="text-center text-xl font-semibold">{title}</h1>
-        <p className="mb-5 text-center text-sm text-neutral-500">{sub}</p>
+        <h1 className="font-bold text-center text-2xl text-shadow-green-800">{title}</h1>
+        <p className="mb-5 text-center text-md font-semibold text-neutral-500">{sub}</p>
         {children}
         <p className="mt-4 text-center text-sm">{footer}</p>
       </Card>
@@ -137,7 +140,7 @@ export function Register() {
       footer={
         <>
           Already have an account?{" "}
-          <Link className="text-green-800 underline" to="/login">
+          <Link className="text-green-800 underline font-semibold" to="/login">
             Login
           </Link>
         </>
