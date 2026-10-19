@@ -1,4 +1,5 @@
-import type { ReactNode } from "react";
+import type { ReactNode} from "react";
+import React from "react"
 import { Link } from "react-router-dom";
 import { motion } from "motion/react";
 import {
@@ -9,9 +10,7 @@ import {
   Leaf,
   MapPin,
   Sprout,
-  Thermometer,
   CloudRain,
-  TrendingUp,
   CheckCircle2,
   ArrowUpRight,
   ChartLine,
@@ -19,6 +18,7 @@ import {
   BellRing,
 } from "lucide-react";
 import hero from "@/images/A4.jfif";
+
 
 const Reveal = ({
   children,
@@ -77,7 +77,7 @@ const steps = [
     "Live forecasts and soil data load for your exact location.",
   ],
   ["Act with confidence", "Get clear risk levels and a daily recommendation."],
-   ["Act with confidence", "Get clear risk levels and a daily recommendation."],
+  ["Act with confidence", "Get clear risk levels and a daily recommendation."],
 ] as const;
 
 export default function Home() {
@@ -110,7 +110,8 @@ export default function Home() {
 
             {/* Main heading */}
             <h1 className="mt-5 text-4xl font-bold leading-[1.1] tracking-tight text-white sm:text-5xl md:text-[68px]">
-              Make better<br />{" "}
+              Make better
+              <br />{" "}
               <span className="text-lime-300">farming decisions</span>{" "}
             </h1>
 
@@ -179,7 +180,6 @@ export default function Home() {
               </div>
             </div>
           </motion.div>
-
 
           <motion.div
             initial={{ opacity: 0, x: 28 }}
@@ -372,35 +372,37 @@ export default function Home() {
         </div>
       </section>
 
-      <section
-        id="how-it-works"
-        className="scroll-mt-20 bg-white text-black"
-      >
+      <section id="how-it-works" className="scroll-mt-20 bg-white text-black">
         <div className="mx-auto max-w-6xl px-4 py-14 sm:px-5 sm:py-20">
           <Reveal>
             <h2 className="text-center text-2xl font-bold tracking-tight sm:text-3xl">
               How it works
             </h2>
           </Reveal>
-          <div className="mt-10 grid gap-8 md:grid-cols-3">
-            <div className="relative grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
-              <div className="absolute left-1/2 top-4 bottom-4 w-[2px] bg-green-400 -translate-x-1/2 hidden md:block">
-              
-              </div>
-
+          
+            <div className="relative mt-10 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+              <div className="absolute left-1/2 top-4 bottom-4 w-[2px] bg-green-400 -translate-x-1/2 hidden md:block"></div>
+              {steps.map((step, i) => {
+              const isEven = i % 2 === 1;
+              return (
+                <React.Fragment>
+                  {isEven && <div className="hidden md:block order-0" />}
+                  <div
+                    className={`w-full ${isEven ? "md:translate-y-12" : ""}`}
+                  >
+                    <Reveal delay={i * 0.1}>
+                      <div className="min-h-140px rounded-2xl border border-gray-100 bg-white p-6 shadow-sm flex gap-4 transition-shadow hover:shadow-md">
+                        <span className="grid h-10 w-10 place-items-center rounded-full text-white bg-green-600 justify-center items-center">
+                          {i+1}
+                        </span>
+                        <p className="mt-1 text-sm text-stone-500">{step}</p>
+                      </div>
+                    </Reveal>
+                  </div>
+                </React.Fragment>
+              );
+            })}
             </div>
-            {steps.map(([t, d], i) => (
-              <Reveal key={t} delay={i * 0.1}>
-                <div>
-                  <span className="grid h-10 w-10 place-items-center rounded-full bg-lime-300 font-bold text-green-900">
-                    {i + 1}
-                  </span>
-                  <h3 className="mt-4 text-lg font-semibold">{t}</h3>
-                  <p className="mt-1 text-stone-600">{d}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
         </div>
       </section>
 
