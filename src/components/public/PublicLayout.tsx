@@ -3,19 +3,14 @@ import { Link, Outlet } from "react-router-dom";
 import { Leaf, Menu, X } from "lucide-react";
 
 const links = ["/", "/#features", "/#how-it-works", "/#about"] as const;
-const labels = ["Home", "About", "Features", "How it works",] as const;
+const labels = ["Home", "About", "Features", "How it works"] as const;
 const pill =
   "rounded-full px-3 py-2 text-lg transition-colors hover:bg-green-50 hover:text-green-900";
 
 export default function PublicLayout() {
   const [open, setOpen] = useState(false);
   const navigation = links.map((to, index) => (
-    <Link
-      key={to}
-      to={to}
-      className={pill}
-      onClick={() => setOpen(false)}
-    >
+    <Link key={to} to={to} className={pill} onClick={() => setOpen(false)}>
       {labels[index]}
     </Link>
   ));
@@ -34,15 +29,18 @@ export default function PublicLayout() {
             </span>
             ClimateSmart Farm
           </Link>
-          <nav aria-label="Main navigation" className="hidden items-center gap-1 md:flex">
+          <nav
+            aria-label="Main navigation"
+            className="hidden items-center gap-1 md:flex"
+          >
             {navigation}
-          </nav>    
-            <Link
-              to="/register"
-              className="rounded-[8px] bg-green-800 px-[18px] py-[10px] text-[17px] font-medium text-white transition-colors hover:bg-green-900"
-            >
-              Get started
-            </Link>
+          </nav>
+          <Link
+            to="/register"
+            className="rounded-[8px] bg-green-800 px-[18px] py-[10px] text-[17px] font-medium text-white transition-colors hover:bg-green-900"
+          >
+            Get started
+          </Link>
           <button
             className="grid h-10 w-10 shrink-0 place-items-center rounded-full text-green-900 hover:bg-green-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-800 md:hidden"
             onClick={() => setOpen(!open)}
@@ -54,7 +52,11 @@ export default function PublicLayout() {
           </button>
         </div>
         {open && (
-          <nav id="mobile-navigation" aria-label="Mobile navigation" className="flex flex-col gap-1 border-t bg-white px-4 py-3 md:hidden">
+          <nav
+            id="mobile-navigation"
+            aria-label="Mobile navigation"
+            className="flex flex-col gap-1 border-t bg-white px-4 py-3 md:hidden"
+          >
             {navigation}
             <Link
               to="/login"

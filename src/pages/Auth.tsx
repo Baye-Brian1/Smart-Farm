@@ -40,7 +40,7 @@ function Shell({
   if (session) return <Navigate to="/app" replace />;
   return (
     <div className="flex min-h-screen items-center justify-center bg-neutral-50 p-4">
-      <Card className="w-full max-w-md border border-white bg-white shadow-md p-10">
+      <Card className="w-full max-w-md p-10">
         <div className="mb-4 text-2xl flex flex-col items-start  ">
           <div className="flex items-center gap-2">
             <Leaf size={24} className="text-green-800" />
@@ -49,9 +49,9 @@ function Shell({
           <span className="ml-8 text-[18px] font-semibold text-green-800">Farm</span>
         </div>
         <h1 className="font-bold text-center text-2xl text-shadow-green-800">{title}</h1>
-        <p className="mb-5 text-center text-md font-semibold text-neutral-500">{sub}</p>
+        <p className="mb-5 text-center text-[16px] text-neutral-500">{sub}</p>
         {children}
-        <p className="mt-4 text-center text-sm">{footer}</p>
+        <p className="mt-4 text-center text-[16px]">{footer}</p>
       </Card>
     </div>
   );
@@ -108,7 +108,7 @@ export function Login() {
           error={errors.password?.message}
           {...register("password")}
         />
-        <Btn type="submit" className="w-full" loading={isSubmitting}>
+        <Btn type="submit" className="w-full h-12 text-lg rounded-sm" loading={isSubmitting}>
           {isSubmitting ? "Signing in…" : "Login"}
         </Btn>
       </form>
@@ -179,7 +179,7 @@ export function Register() {
           error={errors.confirm?.message}
           {...register("confirm")}
         />
-        <Btn type="submit" className="w-full" loading={isSubmitting}>
+        <Btn type="submit" className="w-full h-12 mt-3 text-lg rounded-sm" loading={isSubmitting}>
           {isSubmitting ? "Creating account…" : "Register"}
         </Btn>
       </form>
