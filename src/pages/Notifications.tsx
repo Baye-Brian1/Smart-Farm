@@ -19,7 +19,7 @@ export default function Notifications() {
   return (
     <div>
       <Title action={<Btn variant="outline" disabled={unread.length === 0} onClick={() => markRead(notes.map((n) => n.id))}>Mark all as read</Btn>}>Notifications{unread.length > 0 && <span className="ml-2 rounded-full bg-green-800 px-2 py-0.5 text-xs text-white">{unread.length}</span>}</Title>
-      {farms.length > 0 && loading && !data && <CardsSkeleton n={3} h="h-14" />}
+      {farms.length > 0 && loading && !data && <CardsSkeleton n={3} h="h-14" cols="" />}
       {error && <ErrorState message={error} onRetry={reload} />}
       {!loading && notes.length === 0 && <EmptyState title="You're all caught up" hint={farms.length ? "New weather alerts and task reminders will show up here." : "Add a farm to start receiving weather alerts."} />}
       {notes.map((n) => { const read = readIds.includes(n.id); return (

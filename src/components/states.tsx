@@ -5,8 +5,8 @@ import { Btn, Card } from "@/components/ui";
 
 export const Skeleton = ({ className = "" }: { className?: string }) => <div className={`animate-pulse rounded-md bg-neutral-200 ${className}`} />;
 
-export const CardsSkeleton = ({ n = 3, h = "h-28" }: { n?: number; h?: string }) => (
-  <div className="grid gap-4 md:grid-cols-3" aria-busy="true" aria-label="Loading">{Array.from({ length: n }, (_, i) => <Skeleton key={i} className={h} />)}</div>
+export const CardsSkeleton = ({ n = 3, h = "h-28", cols }: { n?: number; h?: string; cols?: string }) => (
+  <div className={`grid gap-4 ${cols ?? (n === 1 ? "" : n === 2 ? "sm:grid-cols-2" : n === 3 ? "sm:grid-cols-2 lg:grid-cols-3" : "grid-cols-2 lg:grid-cols-4")}`} aria-busy="true" aria-label="Loading">{Array.from({ length: n }, (_, i) => <Skeleton key={i} className={h} />)}</div>
 );
 
 export function ErrorState({ message, onRetry }: { message: string; onRetry?: () => void }) {

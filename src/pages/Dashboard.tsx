@@ -36,11 +36,11 @@ function Overview() {
   ];
   return (
     <div>
-      <div className="mb-6 grid gap-4 md:grid-cols-4">{stats.map(([l, v]) => <Card key={l}><div className="text-2xl font-semibold">{v}</div><div className="text-xs text-neutral-500">{l}</div></Card>)}</div>
-      <div className="grid gap-6 lg:grid-cols-3">
-        <div className="lg:col-span-2">
+      <div className="mb-6 grid grid-cols-2 gap-4 lg:grid-cols-4">{stats.map(([l, v]) => <Card key={l}><div className="text-2xl font-semibold">{v}</div><div className="text-xs text-neutral-500">{l}</div></Card>)}</div>
+      <div className="grid gap-6 xl:grid-cols-3">
+        <div className="min-w-0 xl:col-span-2">
           <h2 className="mb-2 font-medium">My Farms</h2>
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="grid gap-4 sm:grid-cols-2">
             {data.map(({ farm: f, report, error: err }) => {
               const p = cropProgress(f);
               return (
@@ -56,9 +56,9 @@ function Overview() {
             })}
           </div>
         </div>
-        <div className="space-y-4">
+        <div className="min-w-0 space-y-4">
           <Card><h2 className="mb-2 font-medium">Weather Forecast{ok[0] && <span className="text-xs font-normal text-neutral-500"> · {ok[0].farm.locationName}</span>}</h2>
-            <div className="grid grid-cols-3 gap-2 text-center text-xs sm:flex sm:justify-between">{lead?.daily.slice(0, 6).map((d) => <div key={d.date}>{day(d.date)}<div className="text-lg">{icon(d.condition)}</div>{Math.round(d.tempMax)}°</div>)}</div>
+            <div className="grid grid-cols-3 gap-2 text-center text-xs sm:grid-cols-6">{lead?.daily.slice(0, 6).map((d) => <div key={d.date}>{day(d.date)}<div className="text-lg">{icon(d.condition)}</div>{Math.round(d.tempMax)}°</div>)}</div>
             {!lead && <p className="text-sm text-neutral-500">Forecast unavailable.</p>}</Card>
           <Card><h2 className="mb-1 font-medium">Today's Recommendation</h2>
             <p className="text-sm text-neutral-600">{lead ? recommend(lead) : "Recommendations appear once weather data loads."}</p></Card>

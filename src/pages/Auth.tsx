@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Leaf } from "lucide-react";
+import { motion } from "motion/react";
 import { Btn, Card, Field } from "@/components/ui";
 import { useStore } from "@/store";
 import { sha256 } from "@/lib/hash";
@@ -39,8 +40,9 @@ function Shell({
   const session = useStore((s) => s.session);
   if (session) return <Navigate to="/app" replace />;
   return (
-    <div className="flex min-h-screen items-center justify-center bg-neutral-50 p-4">
-      <Card className="w-full max-w-md p-10">
+    <div className="flex min-h-dvh items-center justify-center bg-neutral-50 p-4">
+      <motion.div className="w-full max-w-md" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, ease: "easeOut" }}>
+      <Card className="w-full p-10 max-sm:px-5">
         <div className="mb-4 text-2xl flex flex-col items-start  ">
           <div className="flex items-center gap-2">
             <Leaf size={24} className="text-green-800" />
@@ -53,6 +55,7 @@ function Shell({
         {children}
         <p className="mt-4 text-center text-[16px]">{footer}</p>
       </Card>
+      </motion.div>
     </div>
   );
 }

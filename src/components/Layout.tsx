@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
-import { motion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { LayoutDashboard, Sprout, CloudSun, TriangleAlert, ListChecks, Eye, MapPin, ChartLine, Bell, Settings, LogOut, Leaf, Menu, X } from "lucide-react";
 import { useStore } from "@/store";
 
@@ -17,7 +17,7 @@ export default function Layout() {
   const user = useStore((s) => s.session);
   const logout = useStore((s) => s.logout);
   return (
-    <div className="min-h-screen bg-neutral-50 text-neutral-900 md:flex">
+    <div className="min-h-dvh bg-neutral-50 text-neutral-900 md:flex">
       <header className="sticky top-0 z-20 flex h-14 items-center justify-between border-b bg-white px-4 md:hidden">
         <div className="flex items-center gap-2 font-bold text-green-800"><Leaf size={18} />ClimateSmart</div>
         <button
@@ -31,20 +31,39 @@ export default function Layout() {
           {open ? <X size={20} /> : <Menu size={20} />}
         </button>
       </header>
-      <aside className={`fixed inset-x-0 top-14 z-10 flex max-h-[calc(100dvh-3.5rem)] flex-col overflow-y-auto border-b bg-white p-3 transition-[transform,visibility] md:visible md:sticky md:top-0 md:h-screen md:max-h-none md:w-56 md:shrink-0 md:translate-y-0 md:border-b-0 md:border-r ${open ? "visible translate-y-0" : "invisible -translate-y-full"}`}>
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            key="menu-backdrop"
+            aria-hidden="true"
+            onClick={() => setOpen(false)}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-x-0 bottom-0 top-14 z-[5] bg-black/20 md:hidden"
+          />
+        )}
+      </AnimatePresence>
+      <aside className={`fixed inset-x-0 top-14 z-10 flex max-h-[calc(100dvh-3.5rem)] flex-col overflow-y-auto border-b bg-white p-3 transition-[transform,visibility] duration-200 ease-out md:visible md:sticky md:top-0 md:h-dvh md:max-h-none md:w-56 md:shrink-0 md:translate-y-0 md:border-b-0 md:border-r ${open ? "visible translate-y-0" : "invisible -translate-y-full"}`}>
         <div className="mb-6 hidden items-center gap-1 px-2 text-lg font-bold text-green-800 md:flex"><Leaf size={18} />ClimateSmart</div>
         <nav id="app-navigation" aria-label="App navigation" className="flex flex-1 flex-col gap-1">
           {nav.map(([to, label, Icon]) => (
-            <NavLink key={to} to={to} end={to === "/app"} onClick={() => setOpen(false)} className={({ isActive }) => `flex items-center gap-2 rounded-md px-3 py-2.5 text-sm transition-colors ${isActive ? "bg-green-800 text-white" : "text-neutral-600 hover:bg-neutral-100"}`}>
-              <Icon size={16} />{label}
+            <NavLink key={to} to={to} end={to === "/app"} onClick={() => setOpen(false)} className={({ isActive }) => `relative flex items-center rounded-md px-3 py-2.5 text-sm transition-colors ${isActive ? "text-white" : "text-neutral-600 hover:bg-neutral-100"}`}>
+              {({ isActive }) => (
+                <>
+                  {isActive && <motion.span layoutId="nav-pill" className="absolute inset-0 rounded-md bg-green-800" transition={{ type: "spring", stiffness: 400, damping: 32 }} />}
+                  <span className="relative z-10 flex items-center gap-2"><Icon size={16} />{label}</span>
+                </>
+              )}
             </NavLink>
           ))}
         </nav>
         <div className="mb-2 truncate px-3 text-xs text-neutral-500">{user?.name}<br />{user?.email}</div>
         <button onClick={() => { setOpen(false); logout(); navigate("/"); }} className="flex items-center gap-2 rounded-md px-3 py-2.5 text-sm text-neutral-600 hover:bg-neutral-100"><LogOut size={16} />Logout</button>
       </aside>
-      <main className="min-w-0 px-4 py-5 sm:p-6">
-        <motion.div key={pathname} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.25 }}><Outlet /></motion.div>
+      <main className="min-w-0 flex-1 px-4 py-5 sm:p-6 lg:p-8">
+        <motion.div key={pathname} className="mx-auto w-full max-w-[90rem]" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.25, ease: "easeOut" }}><Outlet /></motion.div>
       </main>
     </div>
   );

@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, Outlet, useLocation } from "react-router-dom";
+import { AnimatePresence, motion } from "motion/react";
 import { Leaf, Menu, X } from "lucide-react";
 
 const links = ["/", "/#features", "/#how-it-works", "/#about"] as const;
@@ -9,6 +10,15 @@ const pill =
 
 export default function PublicLayout() {
   const [open, setOpen] = useState(false);
+  const { hash, pathname } = useLocation();
+
+  // Scroll smoothly to #features / #how-it-works / #about when the hash changes.
+  useEffect(() => {
+    if (!hash) return;
+    const el = document.getElementById(hash.slice(1));
+    if (el) requestAnimationFrame(() => el.scrollIntoView({ behavior: "smooth" }));
+  }, [hash, pathname]);
+
   const navigation = links.map((to, index) => (
     <Link key={to} to={to} className={pill} onClick={() => setOpen(false)}>
       {labels[index]}
@@ -16,15 +26,15 @@ export default function PublicLayout() {
   ));
 
   return (
-    <div className="flex min-h-screen flex-col bg-stone-50 text-stone-900">
+    <div className="flex min-h-dvh flex-col bg-stone-50 text-stone-900">
       <header className="sticky top-0 z-20 border-b bg-white/80 backdrop-blur">
-        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-3 px-4 sm:px-5">
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-3 px-4 sm:h-20 sm:px-5">
           <Link
             to="/"
-            className="flex items-center gap-2 text-2xl font-bold text-green-900"
+            className="flex items-center gap-2 whitespace-nowrap text-xl font-bold text-green-900 sm:text-2xl"
             onClick={() => setOpen(false)}
           >
-            <span className="grid h-8 w-8 place-items-center rounded-lg bg-green-800 text-white">
+            <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-green-800 text-white">
               <Leaf size={18} />
             </span>
             ClimateSmart Farm
@@ -35,45 +45,56 @@ export default function PublicLayout() {
           >
             {navigation}
           </nav>
-          <Link
-            to="/register"
-            className="rounded-[8px] bg-green-800 px-[18px] py-[10px] text-[17px] font-medium text-white transition-colors hover:bg-green-900"
-          >
-            Get started
-          </Link>
-          <button
-            className="grid h-10 w-10 shrink-0 place-items-center rounded-full text-green-900 hover:bg-green-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-800 md:hidden"
-            onClick={() => setOpen(!open)}
-            aria-label="Toggle menu"
-            aria-expanded={open}
-            aria-controls="mobile-navigation"
-          >
-            {open ? <X size={20} /> : <Menu size={20} />}
-          </button>
-        </div>
-        {open && (
-          <nav
-            id="mobile-navigation"
-            aria-label="Mobile navigation"
-            className="flex flex-col gap-1 border-t bg-white px-4 py-3 md:hidden"
-          >
-            {navigation}
-            <Link
-              to="/login"
-              onClick={() => setOpen(false)}
-              className="px-3 py-1.5 text-sm"
-            >
-              Log in
-            </Link>
+          <div className="flex items-center gap-2">
             <Link
               to="/register"
-              onClick={() => setOpen(false)}
-              className="rounded-full bg-green-800 px-4 py-2 text-center text-sm text-white"
+              className="hidden rounded-[8px] bg-green-800 px-[18px] py-[10px] text-[17px] font-medium text-white transition-colors hover:bg-green-900 sm:inline-block"
             >
               Get started
             </Link>
-          </nav>
-        )}
+            <button
+              className="grid h-10 w-10 shrink-0 place-items-center rounded-full text-green-900 hover:bg-green-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-800 md:hidden"
+              onClick={() => setOpen(!open)}
+              aria-label="Toggle menu"
+              aria-expanded={open}
+              aria-controls="mobile-navigation"
+            >
+              {open ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
+        </div>
+        <AnimatePresence initial={false}>
+          {open && (
+            <motion.nav
+              key="mobile-navigation"
+              id="mobile-navigation"
+              aria-label="Mobile navigation"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.22, ease: "easeOut" }}
+              className="overflow-hidden border-t bg-white md:hidden"
+            >
+              <div className="flex flex-col gap-1 px-4 py-3">
+                {navigation}
+                <Link
+                  to="/login"
+                  onClick={() => setOpen(false)}
+                  className="px-3 py-1.5 text-sm"
+                >
+                  Log in
+                </Link>
+                <Link
+                  to="/register"
+                  onClick={() => setOpen(false)}
+                  className="rounded-full bg-green-800 px-4 py-2 text-center text-sm text-white"
+                >
+                  Get started
+                </Link>
+              </div>
+            </motion.nav>
+          )}
+        </AnimatePresence>
       </header>
       <main className="flex-1">
         <Outlet />

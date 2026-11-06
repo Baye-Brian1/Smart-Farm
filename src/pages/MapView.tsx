@@ -18,7 +18,7 @@ export default function MapView() {
     <div>
       <Title>Map View</Title>
       {error && <div className="mb-3"><ErrorState message={error} onRetry={reload} /></div>}
-      <Card className="relative h-80 overflow-hidden bg-gradient-to-br from-green-100 to-lime-200 p-0 sm:h-[28rem]">
+      <Card className="relative h-80 overflow-hidden bg-gradient-to-br from-green-100 to-lime-200 p-0 sm:h-[28rem] lg:h-[34rem]">
         {loading && !data && <Skeleton className="absolute inset-0 rounded-none opacity-40" />}
         {farms.map((f) => {
           const rep = data?.find((r) => r.farm.id === f.id)?.report;

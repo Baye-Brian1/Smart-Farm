@@ -99,7 +99,7 @@ export default function Home() {
         <img
           src={hero}
           alt="Healthy green maize field in the countryside"
-          className="absolute inset-0 -z-20 h-full w-full object-fill object-center"
+          className="absolute inset-0 -z-20 h-full w-full object-cover object-center"
         />
 
         {/* Dark gradient for readable text */}
@@ -121,7 +121,7 @@ export default function Home() {
             </div>
 
             {/* Main heading */}
-            <h1 className="mt-5 text-4xl font-bold leading-[1.1] tracking-tight text-white sm:text-5xl md:text-[68px]">
+            <h1 className="mt-5 text-4xl font-bold leading-[1.1] tracking-tight text-white sm:text-5xl lg:text-6xl xl:text-[68px]">
               Make better
               <br />{" "}
               <span className="text-lime-300">farming decisions</span>{" "}
@@ -150,7 +150,7 @@ export default function Home() {
               </Link>
 
               <Link
-                to="/features"
+                to="/#features"
                 className="inline-flex min-h-14 items-center justify-center gap-2 rounded-[9px] border
                  border-white/45 bg-white/5 px-6 py-3 font-semibold text-white backdrop-blur-sm 
                  transition-all duration-200 hover:border-white hover:bg-white/10 "
@@ -362,7 +362,7 @@ export default function Home() {
         className="mx-auto max-w-6xl scroll-mt-20 px-4 py-14 sm:px-5 sm:py-20"
       >
         <Reveal>
-          <h2 className="text-center text-2xl font-bold tracking-tight sm:text-[44px]">
+          <h2 className="text-center text-2xl font-bold tracking-tight sm:text-3xl lg:text-[44px]">
             Everything you need to decide <br /> with confidence
           </h2>
           <p className="mx-auto mt-3 max-w-xl text-center text-xl text-stone-600">
@@ -397,7 +397,7 @@ export default function Home() {
             {steps.map((step, i) => {
               const isEven = i % 2 === 1;
               return (
-                <React.Fragment>
+                <React.Fragment key={step.title}>
                   {isEven && <div className="hidden md:block order-0" />}
                   <div
                     className={`w-full ${isEven ? "md:translate-y-12" : ""}`}

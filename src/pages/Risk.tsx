@@ -28,7 +28,7 @@ function View({ farms }: { farms: Farm[] }) {
       {r && !error && (<>
         <Card className="mb-4 flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center"><div><div className="text-sm text-neutral-500">Overall Risk Level · based on current weather, soil and 7-day forecast</div>
           <div className={`mt-1 inline-block rounded px-2 py-0.5 text-2xl font-semibold ${riskTone[r.level]}`}>{r.level}</div></div><div className="text-3xl font-semibold">{r.score} / 100</div></Card>
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid gap-4 lg:grid-cols-2">
           <Card><h2 className="mb-3 font-medium">Risk Breakdown</h2>{r.breakdown.map((b) => <div key={b.label} className="mb-3"><div className="mb-1 flex justify-between text-sm"><span>{b.label}</span><span>{b.value}%</span></div><Bar v={b.value} color={bar(b.value)} /></div>)}</Card>
           <Card><h2 className="mb-3 font-medium">Recent Alerts</h2>
             {r.alerts.length === 0 && <p className="text-sm text-neutral-500">No active alerts. Conditions look stable.</p>}

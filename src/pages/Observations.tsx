@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Trash2 } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
 import { useStore, type Observation } from "@/store";
 import { today } from "@/lib/farmLogic";
 import { Btn, Card, Field, Select, Title } from "@/components/ui";
@@ -23,26 +24,26 @@ export default function Observations() {
   return (
     <div>
       <Title action={<Btn onClick={() => setOpen(!open)}>+ New Observation</Btn>}>Observations</Title>
-      {open && (
-        <Card className="mb-4 grid gap-x-4 md:grid-cols-2">
+      <AnimatePresence initial={false}>{open && (
+        <motion.div key="obs-form" initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.2 }}><Card className="mb-4 grid gap-x-4 md:grid-cols-2">
           <Field label="What did you see?" value={title} onChange={(e) => setTitle(e.target.value)} error={err} />
           <Select label="Farm" value={farmId} onChange={(e) => setFarmId(e.target.value)}><option value="">General</option>{farms.map((f) => <option key={f.id} value={f.id}>{f.name}</option>)}</Select>
           <Select label="Category" value={cat} onChange={(e) => setCat(e.target.value)}>{CATS.map((c) => <option key={c}>{c}</option>)}</Select>
           <Select label="Severity" value={sev} onChange={(e) => setSev(e.target.value as Observation["severity"])}><option>Low</option><option>Medium</option><option>High</option></Select>
           <div className="md:col-span-2"><Field label="Notes (optional)" value={note} onChange={(e) => setNote(e.target.value)} /></div>
           <div className="flex gap-2 md:col-span-2"><Btn onClick={save}>Save observation</Btn><Btn variant="outline" onClick={() => setOpen(false)}>Cancel</Btn></div>
-        </Card>
-      )}
+        </Card></motion.div>
+      )}</AnimatePresence>
       <div className="mb-4 flex flex-wrap gap-2">{["All", ...CATS].map((x) => <button key={x} onClick={() => setFilter(x)} aria-pressed={filter === x} className={`rounded-full border px-3 py-1 text-sm transition-colors ${filter === x ? "border-green-800 bg-green-800 text-white" : "bg-white hover:bg-neutral-100"}`}>{x}</button>)}</div>
       {observations.length === 0 && <EmptyState title="No observations yet" hint="Record pests, disease or growth notes as you walk your fields." />}
       {observations.length > 0 && list.length === 0 && <p className="text-sm text-neutral-500">No {filter.toLowerCase()} observations.</p>}
-      {list.map((o) => (
-        <Card key={o.id} className="mb-2 flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
+      <AnimatePresence initial={false}>{list.map((o) => (
+        <motion.div key={o.id} layout="position" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, x: -16 }} transition={{ duration: 0.2 }} className="mb-2"><Card className="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
           <div className="min-w-0"><b className="break-words text-sm">{o.title}</b><div className="break-words text-xs text-neutral-500">{farms.find((f) => f.id === o.farmId)?.name ?? "General"} · {o.category} · {o.date}</div>{o.note && <p className="mt-1 break-words text-xs text-neutral-600">{o.note}</p>}</div>
           <div className="flex shrink-0 items-center gap-2 self-end sm:self-auto"><span className={`rounded px-2 py-0.5 text-xs ${sevTone[o.severity]}`}>{o.severity}</span>
             <button onClick={() => removeObservation(o.id)} aria-label="Delete observation" className="rounded p-1 text-neutral-400 hover:bg-red-50 hover:text-red-600"><Trash2 size={16} /></button></div>
-        </Card>
-      ))}
+        </Card></motion.div>
+      ))}</AnimatePresence>
     </div>
   );
 }

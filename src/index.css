@@ -125,3 +125,14 @@
     @apply font-sans;
   }
 }
+
+@layer base {
+  body {
+    overflow-x: clip;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+}
